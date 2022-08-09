@@ -11,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/radar")
+@RequestMapping("/api/radar")
 public class RadarController {
 
     final
@@ -49,8 +49,17 @@ public class RadarController {
      * @param idRadar id de la tarea a buscar
      * @return objeto completo encontrado.
      */
-    @GetMapping("/searchbyid")
-    public Mono<RadarDocument> getUserId(String idRadar) {
+    @GetMapping("/searchbyid/{idRadar}")
+    public Mono<RadarDocument> getRadarById(@PathVariable String idRadar) {
         return radarRepository.findById(idRadar);
+    }
+
+    @PutMapping("/update/{id}")
+    public Mono<RadarDocument> updateRadarById(@PathVariable String id, Radar radar){
+        return radarRepository.findById(id)
+                .doOnNext(radarDocument ->  new RadarDocument(radarDocument.
+                        getIdentification(),radar.getName(),
+                        radar.getKnowlegdeAreas()))
+                .flatMap(radarRepository::save);
     }
 }
