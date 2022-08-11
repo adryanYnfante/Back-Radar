@@ -2,11 +2,13 @@ package org.sofka.radar.controller;
 
 
 import org.sofka.radar.document.UserDocument;
+import org.sofka.radar.model.Token;
 import org.sofka.radar.repository.IUserRepository;
 import org.sofka.radar.service.JwtHelper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -70,10 +72,16 @@ public class UserController {
              //   .map(userDocument -> jwt.generateLoginToken(userDocument)).switchIfEmpty(Mono.error(new IllegalAccessError("No existe")));
     }
     @GetMapping("/login/{email}")
-    public Mono<String> loginEmail(@PathVariable String email){
+    public Mono<ResponseEntity<Token>> loginEmail(@PathVariable String email){
        return iUserRepository.findByEmail(email)
                .map(userDocument ->
              jwt.createJwt(userDocument)
-        );
+        ).map(token -> {var tokesito = new Token(token);
+                   return     ResponseEntity.status(HttpStatus.ACCEPTED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(tokesito);})
+               .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                       .contentType(MediaType.APPLICATION_JSON)
+                       .body(new Token("Usuario no Encontrado"))));
     }
 }
