@@ -3,6 +3,7 @@ package org.sofka.radar.controller;
 
 import org.sofka.radar.document.UserDocument;
 import org.sofka.radar.repository.IUserRepository;
+import org.sofka.radar.service.UserService;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,11 +15,12 @@ import reactor.core.publisher.Mono;
 public class UserController {
 
     final
-    IUserRepository iUserRepository;
+    UserService userService;
 
 
-    public UserController(IUserRepository userRepository) {
-        this.iUserRepository = userRepository;
+    public UserController( UserService userService) {
+        this.userService = userService;
+
     }
 
     /**
@@ -28,7 +30,7 @@ public class UserController {
      */
     @GetMapping
     public Flux<UserDocument> getUserAll() {
-        return iUserRepository.findAll();
+        return userService.getUsuarioAll();
     }
 
     /**
@@ -39,7 +41,7 @@ public class UserController {
      */
     @PostMapping
     public Mono<UserDocument> saveUser(@RequestBody UserDocument user) {
-        return iUserRepository.save(user);
+        return userService.saveUser(user);
     }
 
     /**
@@ -50,6 +52,6 @@ public class UserController {
      */
     @GetMapping("/searchbyid")
     public Mono<UserDocument> getUserId(String idUser) {
-        return iUserRepository.findById(idUser);
+        return userService.getUsuarioId(idUser);
     }
 }

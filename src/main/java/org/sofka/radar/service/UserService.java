@@ -3,7 +3,10 @@ package org.sofka.radar.service;
 
 import org.sofka.radar.document.UserDocument;
 import org.sofka.radar.repository.IUserRepository;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -14,8 +17,14 @@ public class UserService {
     final
     IUserRepository usuarioRepository;
 
-    public UserService(IUserRepository userRepository) {
+   private final String url = "http://localhost:8080/";
+    private WebClient webClient;
+
+    public UserService(WebClient.Builder webClientBuilder, IUserRepository userRepository) {
         this.usuarioRepository = userRepository;
+        this.webClient = webClientBuilder.baseUrl("http://localhost:8080/")
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                .build();
     }
 
 
@@ -48,5 +57,14 @@ public class UserService {
      */
     public Mono<UserDocument> getUsuarioId(String idUsuario){
         return usuarioRepository.findById(idUsuario);
+    }
+
+
+    public Flux<UserDocument> getData(){
+        return  webClient.get()
+                .uri("league")
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(UserDocument.class);
     }
 }
