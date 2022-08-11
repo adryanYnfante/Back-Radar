@@ -48,8 +48,8 @@ public class UserController {
      * @param idUser id de la tarea a buscar
      * @return objeto completo encontrado.
      */
-    @GetMapping("/searchbyid")
-    public Mono<UserDocument> getUserId(String idUser) {
-        return iUserRepository.findById(idUser);
+    @GetMapping("/{id}")
+    public Mono<UserDocument> getUserId(@PathVariable  String id) {
+        return iUserRepository.findById(id);
     }
 }
