@@ -49,4 +49,8 @@ public class UserService {
     public Mono<UserDocument> getUsuarioId(String idUsuario){
         return usuarioRepository.findById(idUsuario);
     }
+
+    public  Mono<UserDocument> findUserByEmail(String email){
+        return usuarioRepository.findByEmail(email);
+    }
 }

@@ -10,4 +10,5 @@ import reactor.core.publisher.Mono;
 public interface IUserRepository extends ReactiveMongoRepository<UserDocument, String>,
         ReactiveQueryByExampleExecutor<UserDocument> {
       Mono<UserDocument> findById(String id);
+      Mono<UserDocument> findByEmail(String email);
 }
