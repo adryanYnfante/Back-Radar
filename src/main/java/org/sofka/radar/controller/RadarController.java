@@ -55,7 +55,12 @@ public class RadarController {
     }
 
     @PutMapping("/update/{id}")
-    public Mono<RadarDocument> updateRadarById(@PathVariable String id, Radar radar){
-        return radarRepository.findById(id).doOnNext(radarDocument ->  new RadarDocument(radarDocument.getIdentification(),radar.getName(),radar.getKnowlegdeAreas())).flatMap(radarRepository::save);
+    public Mono<RadarDocument> updateRadarById(@PathVariable String id,@RequestBody  RadarDocument radar){
+        return radarRepository.save(new RadarDocument(id, radar.getName(),radar.getKnowlegdeAreas()));
+    }
+
+    @GetMapping("/searchbyname/{name}")
+    public Mono<RadarDocument> getRadarByName(@PathVariable String name){
+        return radarRepository.findByName(name);
     }
 }
