@@ -17,14 +17,10 @@ public class UserService {
     final
     IUserRepository usuarioRepository;
 
-   private final String url = "http://localhost:8080/";
-    private WebClient webClient;
 
-    public UserService(WebClient.Builder webClientBuilder, IUserRepository userRepository) {
+    public UserService( IUserRepository userRepository) {
         this.usuarioRepository = userRepository;
-        this.webClient = webClientBuilder.baseUrl("http://localhost:8080/")
-                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .build();
+
     }
 
 
@@ -60,11 +56,5 @@ public class UserService {
     }
 
 
-    public Flux<UserDocument> getData(){
-        return  webClient.get()
-                .uri("league")
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToFlux(UserDocument.class);
-    }
+
 }

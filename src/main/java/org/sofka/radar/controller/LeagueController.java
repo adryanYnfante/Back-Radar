@@ -5,7 +5,9 @@ import io.netty.handler.timeout.ReadTimeoutHandler;
 import io.netty.handler.timeout.WriteTimeoutHandler;
 import org.sofka.radar.document.RadarDocument;
 import org.sofka.radar.document.UserDocument;
+import org.sofka.radar.service.LeagueService;
 import org.sofka.radar.service.UserService;
+import org.springframework.http.MediaType;
 import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,19 +28,16 @@ import java.util.concurrent.TimeUnit;
 public class LeagueController {
 
     final
-    UserService userService;
+    LeagueService leagueService;
 
-    public LeagueController(UserService userService) {
-        this.userService = userService;
+    public LeagueController(LeagueService leagueService) {
+        this.leagueService = leagueService;
     }
 
 
     @GetMapping
     private Flux<UserDocument> getAllLeague() {
-
-
-        return userService.getData();
-
+        return leagueService.getData();
 
         /*
         String uri = "http://localhost:3000/radar";
