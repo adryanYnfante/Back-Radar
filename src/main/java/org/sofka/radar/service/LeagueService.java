@@ -31,4 +31,13 @@ public class LeagueService {
                 .retrieve()
                 .bodyToFlux(RadarExterno.class);
     }
+
+    public Flux<RadarExterno > getDataById(String idStudent){
+
+        return  webClient.get()
+                .uri("/ligas/"+idStudent)
+                .accept(MediaType.APPLICATION_JSON)
+                .retrieve()
+                .bodyToFlux(RadarExterno.class);
+    }
 }

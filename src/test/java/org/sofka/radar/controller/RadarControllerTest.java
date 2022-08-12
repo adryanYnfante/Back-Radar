@@ -28,24 +28,18 @@ class RadarControllerTest {
     void setUp() {
         //se crean los mocks
         MockitoAnnotations.openMocks(this);
-
-
         RadarController router = new RadarController(radarService);
 
         //simulacion de peticion a handler por medio del router
         this.client = WebTestClient.bindToController(router)
                 .configureClient().baseUrl("/api/radar").build();
-
-
-
     }
-
 
     @Test
     void saveRadar() {
         List<KnowlegdeArea> list = new ArrayList<>();
-        list.add(new KnowlegdeArea("Pruebas","3.4"));
-        list.add(new KnowlegdeArea("Front","4.4"));
+        list.add(new KnowlegdeArea("Pruebas", "3.4"));
+        list.add(new KnowlegdeArea("Front", "4.4"));
 
         RadarDocument radar = RadarDocument.builder()
                 .identification("1234")
@@ -65,8 +59,8 @@ class RadarControllerTest {
     void getRadarById() {
 
         List<KnowlegdeArea> list = new ArrayList<>();
-        list.add(new KnowlegdeArea("Pruebas","3.4"));
-        list.add(new KnowlegdeArea("Front","4.4"));
+        list.add(new KnowlegdeArea("Pruebas", "3.4"));
+        list.add(new KnowlegdeArea("Front", "4.4"));
 
         RadarDocument radar = RadarDocument.builder()
                 .identification("1234")
@@ -87,8 +81,8 @@ class RadarControllerTest {
     @Test
     void getRadarByName() {
         List<KnowlegdeArea> list = new ArrayList<>();
-        list.add(new KnowlegdeArea("Pruebas","3.4"));
-        list.add(new KnowlegdeArea("Front","4.4"));
+        list.add(new KnowlegdeArea("Pruebas", "3.4"));
+        list.add(new KnowlegdeArea("Front", "4.4"));
 
         RadarDocument radar = RadarDocument.builder()
                 .identification("1234")
