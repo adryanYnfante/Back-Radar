@@ -5,6 +5,7 @@ import org.sofka.radar.document.UserDocument;
 import org.sofka.radar.model.Radar;
 import org.sofka.radar.repository.IRadarRepository;
 import org.sofka.radar.repository.IUserRepository;
+import org.sofka.radar.service.RadarService;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,10 +16,10 @@ import reactor.core.publisher.Mono;
 public class RadarController {
 
     final
-    IRadarRepository radarRepository;
+    RadarService radarService;
 
-    public RadarController(IRadarRepository radarRepository) {
-        this.radarRepository = radarRepository;
+    public RadarController(RadarService radarService) {
+        this.radarService = radarService;
     }
 
 
@@ -29,7 +30,7 @@ public class RadarController {
      */
     @GetMapping
     public Flux<RadarDocument> getRadarAll() {
-        return radarRepository.findAll();
+        return radarService.getRadarAll();
     }
 
     /**
@@ -40,7 +41,7 @@ public class RadarController {
      */
     @PostMapping
     public Mono<RadarDocument> saveRadar(@RequestBody RadarDocument radar) {
-        return radarRepository.save(radar);
+        return radarService.saveRadar(radar);
     }
 
     /**
@@ -51,16 +52,16 @@ public class RadarController {
      */
     @GetMapping("/searchbyid/{idRadar}")
     public Mono<RadarDocument> getRadarById(@PathVariable String idRadar) {
-        return radarRepository.findById(idRadar);
+        return radarService.getRadarId(idRadar);
     }
 
     @PutMapping("/update/{id}")
     public Mono<RadarDocument> updateRadarById(@PathVariable String id,@RequestBody  RadarDocument radar){
-        return radarRepository.save(new RadarDocument(id, radar.getName(),radar.getKnowlegdeAreas()));
+        return radarService.saveRadar(new RadarDocument(id, radar.getName(),radar.getKnowlegdeAreas()));
     }
 
     @GetMapping("/searchbyname/{name}")
     public Mono<RadarDocument> getRadarByName(@PathVariable String name){
-        return radarRepository.findByName(name);
+        return radarService.getRadarName(name);
     }
 }

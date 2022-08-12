@@ -47,4 +47,14 @@ public class RadarService {
     public Mono<RadarDocument> getRadarId(String idRadar){
         return radarRepository.findById(idRadar);
     }
+
+    /**
+     * Obtiene un objeto entity a partir de su Name
+     *
+     * @param idRadar id de la tarea a buscar
+     * @return objeto completo encontrado.
+     */
+    public Mono<RadarDocument> getRadarName(String idRadar){
+        return radarRepository.findByName(idRadar);
+    }
 }
