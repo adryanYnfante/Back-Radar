@@ -24,7 +24,7 @@ public class UserController {
 
     final JwtHelper jwt = new JwtHelper();
 
-    public UserController( UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
 
 
@@ -60,32 +60,35 @@ public class UserController {
      */
 
     @GetMapping("/{id}")
-    public Mono<UserDocument> getUserId(@PathVariable  String id) {
+    public Mono<UserDocument> getUserId(@PathVariable String id) {
         return userService.getUsuarioId(id);
     }
 
     @PostMapping("/login")
-    public Mono<ServerResponse> loginWithEmail(){
+    public Mono<ServerResponse> loginWithEmail() {
 
-           return     userService.findUserByEmail("sopas@gmail.com")
-                       .map(userDocument -> jwt.createJwt(userDocument))
-                        .flatMap(token -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
-                           .body(token, String.class));
+        return userService.findUserByEmail("sopas@gmail.com")
+                .map(userDocument -> jwt.createJwt(userDocument))
+                .flatMap(token -> ServerResponse.ok().contentType(MediaType.APPLICATION_JSON)
+                        .body(token, String.class));
 
-             //   .map(userDocument -> jwt.generateLoginToken(userDocument)).switchIfEmpty(Mono.error(new IllegalAccessError("No existe")));
+        //   .map(userDocument -> jwt.generateLoginToken(userDocument)).switchIfEmpty(Mono.error(new IllegalAccessError("No existe")));
     }
+
     @GetMapping("/login/{email}")
-    public Mono<ResponseEntity<Token>> loginEmail(@PathVariable String email){
-       return userService.findUserByEmail(email)
-               .map(userDocument ->
-             jwt.createJwt(userDocument)
-        ).map(token -> {var tokesito = new Token(token);
-                   return     ResponseEntity.status(HttpStatus.ACCEPTED)
-                .contentType(MediaType.APPLICATION_JSON)
-                .body(tokesito);})
-               .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
-                       .contentType(MediaType.APPLICATION_JSON)
-                       .body(new Token("Usuario no Encontrado"))));
+    public Mono<ResponseEntity<Token>> loginEmail(@PathVariable String email) {
+        return userService.findUserByEmail(email)
+                .map(userDocument ->
+                        jwt.createJwt(userDocument)
+                ).map(token -> {
+                    var tokesito = new Token(token);
+                    return ResponseEntity.status(HttpStatus.ACCEPTED)
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .body(tokesito);
+                })
+                .switchIfEmpty(Mono.just(ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .body(new Token("Usuario no Encontrado"))));
 
     }
 }

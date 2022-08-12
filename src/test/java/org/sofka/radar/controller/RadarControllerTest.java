@@ -17,6 +17,11 @@ import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
+/**
+ * Realizamos pruebas desde el controller, haciendo uso de
+ * mocks probamos los metodos de guardar y obtener
+ * mockeando las peticiones.
+ */
 class RadarControllerTest {
 
     @Mock

@@ -6,6 +6,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
+/**
+ *
+ * Configuraicion del webClient, permite consumir una api externa
+ * solo modificar la urlBase
+ */
 @Configuration
 public class WebClientConfiguration {
 

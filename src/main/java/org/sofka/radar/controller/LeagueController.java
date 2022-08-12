@@ -11,6 +11,12 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 
+/**
+ * Este controller permite consumir una api externa,
+ * en la clase WebClientConfigration se parametriza la
+ * URL base.
+ *
+ */
 @CrossOrigin
 @RestController
 @RequestMapping("/league")
@@ -23,6 +29,11 @@ public class LeagueController {
         this.leagueService = leagueService;
     }
 
+    /**
+     * llamomos al servicio que nos permite consumir la API externa.
+     *
+     * @return retornamos el body en formato JSON
+     */
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     private Mono<List<RadarExterno>> getAllLeague() {
         return leagueService.getData().collectList();

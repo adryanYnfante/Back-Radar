@@ -14,28 +14,38 @@ import reactor.core.publisher.Flux;
 
 import java.util.List;
 
+/**
+ * Servicio para consumir una api externa,
+ * se hace uso del webClient, se configura la ruta base y los
+ * header en WebClientConfiguration.
+ *
+ */
 @Service
 public class LeagueService {
-
-
 
     @Autowired
     private WebClient webClient;
 
 
-    public Flux<RadarExterno > getData(){
+    /**
+     * Consumimos api externa, completamos la url
+     * y formateamos la data.
+     *
+     * @return retornamos la respuesta obtenida en formato JSON de tipo RadarExterno.
+     */
+    public Flux<RadarExterno> getData() {
 
-        return  webClient.get()
+        return webClient.get()
                 .uri("/ligas")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(RadarExterno.class);
     }
 
-    public Flux<RadarExterno > getDataById(String idStudent){
+    public Flux<RadarExterno> getDataById(String idStudent) {
 
-        return  webClient.get()
-                .uri("/ligas/"+idStudent)
+        return webClient.get()
+                .uri("/ligas/" + idStudent)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .bodyToFlux(RadarExterno.class);
