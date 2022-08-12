@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 
 @CrossOrigin
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 public class UserController {
 
     final

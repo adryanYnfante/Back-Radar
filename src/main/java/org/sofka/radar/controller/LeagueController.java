@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/league")
+@RequestMapping("/api/league")
 public class LeagueController {
 
     final
@@ -25,8 +25,6 @@ public class LeagueController {
     public LeagueController(LeagueService leagueService) {
         this.leagueService = leagueService;
     }
-
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     private Mono<List<RadarExterno>> getAllLeague() {
         return leagueService.getData().collectList();
