@@ -3,10 +3,7 @@ package org.sofka.radar.service;
 
 import org.sofka.radar.document.UserDocument;
 import org.sofka.radar.repository.IUserRepository;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -55,6 +52,10 @@ public class UserService {
         return usuarioRepository.findById(idUsuario);
     }
 
+
+    public  Mono<UserDocument> findUserByEmail(String email){
+        return usuarioRepository.findByEmail(email);
+    }
 
 
 }

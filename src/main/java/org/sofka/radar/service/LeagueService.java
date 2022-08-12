@@ -1,11 +1,18 @@
 package org.sofka.radar.service;
 
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import org.bson.json.JsonObject;
 import org.sofka.radar.document.UserDocument;
+import org.sofka.radar.model.KnowlegdeArea;
+import org.sofka.radar.model.Radar;
+import org.sofka.radar.model.RadarExterno;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
+
+import java.util.List;
 
 @Service
 public class LeagueService {
@@ -16,12 +23,12 @@ public class LeagueService {
     private WebClient webClient;
 
 
-    public Flux<UserDocument> getData(){
+    public Flux<RadarExterno > getData(){
 
         return  webClient.get()
-                .uri("/posts")
+                .uri("/ligas")
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToFlux(UserDocument.class);
+                .bodyToFlux(RadarExterno.class);
     }
 }

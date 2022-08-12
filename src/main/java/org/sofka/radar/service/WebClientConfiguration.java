@@ -12,10 +12,10 @@ public class WebClientConfiguration {
     public WebClient webClient;
 
     @Bean
-    public WebClient webClient(){
+    public WebClient webClient() {
         WebClient webClient = WebClient
                 .builder()
-                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .baseUrl("http://localhost:3000/")
                 .defaultCookie("cookieKey", "cookieValue")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
